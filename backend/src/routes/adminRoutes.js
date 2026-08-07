@@ -30,6 +30,18 @@ const {
   importSemesterStudents
 } = require('../controllers/adminController');
 
+const {
+  getMarksSheet,
+  saveMarksSheet,
+  getMarksSampleSheet,
+  importMarksSheet,
+  getMonthlyAttendance,
+  exportMonthlyAttendanceExcel,
+  exportStudentAttendanceSlipsExcel,
+  generateReportCard,
+  generateReportCardExcel
+} = require('../controllers/reportCardController');
+
 router.get('/stats', getDashboardStats);
 router.get('/daily-attendance-stats', getDailyAttendanceStats);
 router.get('/semesters/:semester/students', getSemesterStudents);
@@ -47,6 +59,17 @@ router.get('/timetable', getTimetableSlots);
 router.post('/timetable', createTimetableSlot);
 router.put('/timetable/:id', updateTimetableSlot);
 router.delete('/timetable/:id', deleteTimetableSlot);
+
+// Report cards / marks / monthly attendance
+router.get('/report-cards/marks', getMarksSheet);
+router.post('/report-cards/marks', saveMarksSheet);
+router.get('/report-cards/marks/sample', getMarksSampleSheet);
+router.post('/report-cards/marks/import', upload.single('file'), importMarksSheet);
+router.get('/report-cards/attendance-monthly', getMonthlyAttendance);
+router.get('/report-cards/attendance-monthly/export', exportMonthlyAttendanceExcel);
+router.get('/report-cards/attendance-monthly/student-slips.xlsx', exportStudentAttendanceSlipsExcel);
+router.get('/report-cards/generate', generateReportCard);
+router.get('/report-cards/generate.xlsx', generateReportCardExcel);
 
 module.exports = router;
 

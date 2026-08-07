@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FaChevronRight, FaLock, FaBook, FaFlask, FaFileAlt, FaCalendarAlt, FaBars, FaTimes, FaPencilAlt, FaTrash, FaEye, FaEyeSlash } from 'react-icons/fa';
+import ReportCardsPanel from '@/components/ReportCardsPanel';
 
 // ── Mock data ────────────────────────────────────────────────────────────────
 const mockFacultyList = [
@@ -1290,6 +1291,9 @@ export default function Admin() {
     )},
     { id: 'CLASS', label: 'Class Manager', icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+    )},
+    { id: 'REPORT_CARDS', label: 'Report Cards', icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
     )},
     { id: 'UPLOADS', label: 'Uploads', icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
@@ -2585,6 +2589,14 @@ export default function Admin() {
                     </div>
                   )}
                 </div>
+              )}
+
+              {/* ── Tab: Report Cards ─────────────────────────────── */}
+              {activeTab === 'REPORT_CARDS' && (
+                <ReportCardsPanel
+                  API_BASE={API_BASE}
+                  triggerNotification={triggerNotification}
+                />
               )}
 
               {/* ── Tab: Uploads ──────────────────────────────────── */}

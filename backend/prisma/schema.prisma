@@ -89,6 +89,7 @@ model Subject {
   createdAt    DateTime @default(now())
   facultyEmail String?
   attendance   Attendance[]
+  assessmentSessions AssessmentSession[]
 }
 
 model User {
@@ -105,6 +106,36 @@ model User {
   needsPasswordChange Boolean  @default(true)
   createdAt           DateTime @default(now())
   attendance          Attendance[]
+  marks               StudentMark[]
+}
+
+model AssessmentSession {
+  id            String        @id @default(uuid())
+  semester      String        // e.g., "Semester 3"
+  subjectId     String
+  subject       Subject       @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  academicMonth String        // e.g., "2026-07"
+  label         String?
+  note          String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  marks         StudentMark[]
+
+  @@unique([semester, subjectId, academicMonth])
+}
+
+model StudentMark {
+  id        String            @id @default(uuid())
+  sessionId String
+  session   AssessmentSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  studentId String
+  student   User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  component String            // "DA-1"…"DA-7" | "CIE-1"…"CIE-5"
+  value     String?           // numeric string or "AB"
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@unique([sessionId, studentId, component])
 }
 
 model Attendance {
